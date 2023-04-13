@@ -1,0 +1,119 @@
+======================
+Empty function no args
+======================
+
+function hello() {}
+
+---
+
+(program 
+    (function_declaration (identifier))
+)
+
+========================
+Empty function with args
+========================
+
+function Hello (args1, args2) {}
+
+---
+
+(program
+    (function_declaration
+        (identifier)
+        (function_parameters (identifier) (identifier))
+    )
+)
+
+==============================
+Empty function with typed args
+==============================
+
+function Hello (args1: Vector.<int>, args2: String) {}
+
+---
+
+(program
+    (function_declaration
+        (identifier)
+        (function_parameters
+            (identifier) (type_hint
+                (generic_data_type
+                    (dotted_identifier (identifier))
+                    (dotted_identifier (identifier))
+                )
+            )
+            (identifier) (type_hint
+                (dotted_identifier (identifier))
+            )
+        )
+    )
+)
+
+===============================
+Empty function with return type
+===============================
+
+function hello(): void {}
+
+---
+
+(program
+    (function_declaration
+        (identifier)
+        (type_hint
+            (dotted_identifier (identifier))
+        )
+    )
+)
+
+================
+With simple body
+================
+
+function hello() {
+    var a = "Hello!";
+}
+
+---
+
+(program
+    (function_declaration 
+        (identifier)
+        (variable_declaration (identifier) (string))
+    )
+)
+
+======================
+With property attribut
+======================
+
+private function world() {
+
+}
+
+---
+
+(program
+    (function_declaration
+        (property_attribut)
+        (identifier)
+    )
+)
+
+==============================
+With variable length parameter
+==============================
+
+function hello(...args) {
+    
+}
+
+---
+
+(program
+    (function_declaration
+        (identifier)
+        (function_parameters (rest (identifier)))
+    )
+)

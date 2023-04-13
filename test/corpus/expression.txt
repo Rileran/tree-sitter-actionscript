@@ -1,0 +1,334 @@
+=========
+subscript
+=========
+
+var a = object[1];
+
+---
+
+
+(program
+    (variable_declaration
+        (identifier)
+        (subscript_expression (identifier) (number))
+    )
+)
+
+===============
+property access
+===============
+
+var a = object.w;
+
+---
+
+(program
+    (variable_declaration
+        (identifier)
+        (member_expression (identifier) (identifier))
+    )
+)
+
+=============
+parenthesized
+=============
+
+var a = ("hello");
+
+---
+
+(program
+    (variable_declaration
+        (identifier)
+        (parenthesized_expression (string))
+    )
+)
+
+===================
+anonymous functions
+===================
+
+const a = function(param: int, ...rest): void {
+    var b = "hello";
+};
+
+---
+
+(program
+    (constant_declaration
+        (identifier)
+        (anonymous_function
+            (function_parameters
+                (identifier)
+                (type_hint
+                    (dotted_identifier
+                    (identifier)))
+                (rest
+                    (identifier)))
+            (type_hint (dotted_identifier (identifier)))
+            (variable_declaration (identifier) (string))
+        )
+    )
+)
+
+=============
+function call
+=============
+
+const res = f(x, y);
+
+---
+
+(program
+    (constant_declaration
+        (identifier)
+        (call_expression (identifier) (identifier) (identifier))
+    )
+)
+
+======================
+identifier assignement
+======================
+
+a = "hello";
+
+---
+
+(program
+    (expression_statement (assignment_expression (identifier) (string)))
+)
+
+=================
+array assignement
+=================
+
+a.b = 2;
+
+---
+
+(program
+    (expression_statement (assignment_expression
+        (member_expression (identifier) (identifier))
+        (number))
+    )
+)
+
+==================
+object assignement
+==================
+
+a[0] = "hello";
+
+---
+
+
+(program
+    (expression_statement (assignment_expression
+        (subscript_expression (identifier) (number))
+        (string))
+    )
+)
+
+===================
+complex assignement
+===================
+
+a[0].b = f(x, y);
+
+---
+
+(program
+    (expression_statement (assignment_expression
+        (member_expression
+            (subscript_expression (identifier) (number))
+            (identifier)
+        )
+        (call_expression
+            (identifier)
+            (identifier) (identifier))
+        )
+    )
+)
+
+========
+self mul
+========
+
+a *= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self div
+========
+
+a /= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self mod
+========
+
+a %= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self add
+========
+
+a += 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self sub
+========
+
+a -= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self shl
+========
+
+a <<= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self shr
+========
+
+a >>= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+=========
+self ushr
+=========
+
+a >>>= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self and
+========
+
+a &= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+========
+self xor
+========
+
+a ^= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+=======
+self or
+=======
+
+a |= 2;
+
+---
+
+(program
+    (expression_statement (augmented_assignment_expression
+        (identifier)
+        (number))
+    )
+)
+
+===
+new
+===
+
+const a = new Date("2022");
+
+---
+
+
+(program
+    (constant_declaration
+        (identifier)
+        (new_expression (call_expression
+            (identifier) (string)
+        ))
+    )
+)

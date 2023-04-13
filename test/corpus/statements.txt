@@ -1,0 +1,13 @@
+================
+import statement
+================
+
+import a.b.c;
+
+---
+
+(program
+    (import_statement
+        (dotted_identifier (identifier) (identifier) (identifier))
+    )
+)

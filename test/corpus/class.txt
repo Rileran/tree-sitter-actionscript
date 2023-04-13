@@ -1,0 +1,112 @@
+===========
+Empty class
+===========
+
+class A {
+
+}
+
+---
+
+(program
+    (class_declaration (identifier))
+)
+
+======================
+Class with inheritance
+======================
+
+class A extends B {
+
+}
+
+---
+
+(program
+    (class_declaration
+        (identifier)
+        (dotted_identifier (identifier))
+    )
+)
+
+=====================
+Class with interfaces
+=====================
+
+class A implements C, D {
+   
+}
+
+---
+
+(program
+    (class_declaration
+        (identifier)
+        (dotted_identifier (identifier)) (dotted_identifier (identifier))
+    )
+)
+
+======================================
+Class with inheritrance and interfaces
+======================================
+
+class A extends B implements C {
+
+}
+
+---
+
+(program
+    (class_declaration
+        (identifier)
+        (dotted_identifier (identifier))
+        (dotted_identifier (identifier))
+    )
+)
+
+================
+With simple body
+================
+
+class Hello {
+    function world(s: String): void {
+
+    }
+}
+
+---
+
+(program
+    (class_declaration
+        (identifier)
+        (function_declaration
+            (identifier)
+            (function_parameters
+                (identifier) (type_hint
+                    (dotted_identifier (identifier))
+                )
+            )
+            (type_hint 
+                (dotted_identifier (identifier))
+            )
+        )
+    )
+)
+
+====================
+With class attributs
+====================
+
+public final class World {
+
+}
+
+---
+
+(program
+    (class_declaration
+        (class_attribut)
+        (class_attribut)
+        (identifier)
+    )
+)

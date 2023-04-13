@@ -1,0 +1,51 @@
+=====
+empty
+=====
+
+interface A {
+
+}
+
+---
+
+(program
+    (interface_declaration (identifier))
+)
+
+================
+with inheritance
+================
+
+interface A extends B, C {
+
+}
+
+---
+
+(program
+    (interface_declaration
+        (identifier)
+        (dotted_identifier (identifier))
+        (dotted_identifier (identifier))
+    )
+)
+
+===========
+simple body
+===========
+
+interface A {
+    function helloWorld(): void;
+}
+
+---
+
+(program
+    (interface_declaration
+        (identifier)
+        (method_declaration 
+            (identifier)
+            (type_hint (dotted_identifier (identifier)))
+        )
+    )
+)

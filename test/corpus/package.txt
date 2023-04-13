@@ -1,0 +1,50 @@
+=====================
+Empty unnamed package
+=====================
+
+package {
+
+}
+
+---
+
+(program
+    (package_declaration)    
+)
+
+===================
+Empty named package
+===================
+
+package a.b {
+
+}
+
+---
+
+(program
+    (package_declaration (dotted_identifier (identifier) (identifier)))
+)
+
+==============
+Simple package
+==============
+
+package a {
+    class B {
+        function c() {
+
+        }
+    }
+}
+
+---
+
+(program
+    (package_declaration
+        (dotted_identifier (identifier))
+        (class_declaration (identifier)
+            (function_declaration (identifier))
+        )
+    )
+)

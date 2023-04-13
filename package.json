@@ -1,0 +1,23 @@
+{
+  "name": "tree-sitter-actionscript",
+  "version": "0.1.0",
+  "description": "Actionscript grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "actionscript"
+  ],
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp rebuild",
+    "test": "tree-sitter test",
+    "build-test": "tree-sitter generate && node-gyp build && tree-sitter test"
+  },
+  "author": "Rileran",
+  "license": "ISC",
+  "dependencies": {
+    "nan": "^2.17.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.7"
+  }
+}
