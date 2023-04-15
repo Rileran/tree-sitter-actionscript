@@ -71,3 +71,15 @@ const a = {a: (w[0])};
         )
     )
 )
+
+============
+empty object
+============
+
+const a = {};
+
+---
+
+(program
+    (constant_declaration (identifier) (object))
+)

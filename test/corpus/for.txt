@@ -1,0 +1,90 @@
+==============
+for assignment
+==============
+
+for (i = 0; i < 10; i++) {
+
+}
+
+---
+
+
+(program
+    (for_statement
+        (expression_statement 
+            (assignment_expression (identifier) (number))
+        )
+        (expression_statement
+            (binary_expression (identifier) (number))
+        )
+        (update_expression (identifier))
+        (statement_block)
+    )
+)
+
+
+
+========================
+for variable declaration
+========================
+
+for (var i = 0; i < 10; i++) {
+
+}
+
+---
+
+(program
+    (for_statement
+        (variable_declaration (identifier) (number))
+        (expression_statement
+            (binary_expression (identifier) (number))
+        )
+        (update_expression (identifier))
+        (statement_block)
+    )
+)
+
+======================================
+for variable declaration with type int
+======================================
+
+for (var i: int = 0; i < 10; i++) {
+
+}
+
+---
+
+(program
+    (for_statement
+        (variable_declaration 
+            (identifier)
+            (type_hint (dotted_identifier (identifier)))
+            (number)
+        )
+        (expression_statement
+            (binary_expression (identifier) (number))
+        )
+        (update_expression (identifier))
+        (statement_block)
+    )
+)
+
+============
+infinite for
+============
+
+for (;;) {
+
+}
+
+---
+
+
+(program
+    (for_statement
+        (empty_statement)
+        (empty_statement)
+        (statement_block)
+    )
+)

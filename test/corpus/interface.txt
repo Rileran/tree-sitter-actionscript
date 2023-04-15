@@ -35,7 +35,7 @@ simple body
 ===========
 
 interface A {
-    function helloWorld(): void;
+    function set helloWorld(): void;
 }
 
 ---
@@ -44,8 +44,27 @@ interface A {
     (interface_declaration
         (identifier)
         (method_declaration 
+            (accessor)
             (identifier)
             (type_hint (dotted_identifier (identifier)))
         )
+    )
+)
+
+=============
+with attribut
+=============
+
+public interface A {
+
+}
+
+---
+
+
+(program
+    (interface_declaration
+        (interface_attribut)
+        (identifier)
     )
 )

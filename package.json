@@ -5,7 +5,8 @@
   "main": "bindings/node",
   "keywords": [
     "parser",
-    "actionscript"
+    "actionscript",
+    "tree-sitter"
   ],
   "scripts": {
     "build": "tree-sitter generate && node-gyp rebuild",
@@ -13,7 +14,7 @@
     "build-test": "tree-sitter generate && node-gyp build && tree-sitter test"
   },
   "author": "Rileran",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "nan": "^2.17.0"
   },

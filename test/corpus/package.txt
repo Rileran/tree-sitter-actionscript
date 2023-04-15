@@ -9,7 +9,9 @@ package {
 ---
 
 (program
-    (package_declaration)    
+    (package_declaration
+        (statement_block)
+    )
 )
 
 ===================
@@ -23,7 +25,10 @@ package a.b {
 ---
 
 (program
-    (package_declaration (dotted_identifier (identifier) (identifier)))
+    (package_declaration 
+        (dotted_identifier (identifier) (identifier))
+        (statement_block)
+    )
 )
 
 ==============
@@ -43,8 +48,13 @@ package a {
 (program
     (package_declaration
         (dotted_identifier (identifier))
-        (class_declaration (identifier)
-            (function_declaration (identifier))
+        (statement_block
+            (class_declaration 
+                (identifier)
+                (statement_block
+                    (function_declaration (identifier) (statement_block))
+                )
+            )
         )
     )
 )

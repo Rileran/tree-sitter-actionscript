@@ -7,7 +7,7 @@ function hello() {}
 ---
 
 (program 
-    (function_declaration (identifier))
+    (function_declaration (identifier) (statement_block))
 )
 
 ========================
@@ -22,6 +22,7 @@ function Hello (args1, args2) {}
     (function_declaration
         (identifier)
         (function_parameters (identifier) (identifier))
+        (statement_block)
     )
 )
 
@@ -47,6 +48,7 @@ function Hello (args1: Vector.<int>, args2: String) {}
                 (dotted_identifier (identifier))
             )
         )
+        (statement_block)
     )
 )
 
@@ -64,6 +66,7 @@ function hello(): void {}
         (type_hint
             (dotted_identifier (identifier))
         )
+        (statement_block)
     )
 )
 
@@ -80,7 +83,9 @@ function hello() {
 (program
     (function_declaration 
         (identifier)
-        (variable_declaration (identifier) (string))
+        (statement_block
+            (variable_declaration (identifier) (string))
+        )
     )
 )
 
@@ -98,6 +103,7 @@ private function world() {
     (function_declaration
         (property_attribut)
         (identifier)
+        (statement_block)
     )
 )
 
@@ -115,5 +121,68 @@ function hello(...args) {
     (function_declaration
         (identifier)
         (function_parameters (rest (identifier)))
+        (statement_block)
+    )
+)
+
+===============
+Function getter
+===============
+
+function get hello() {
+    
+}
+
+---
+
+(program
+    (function_declaration
+        (accessor)
+        (identifier)
+        (statement_block)
+    )
+)
+
+===============
+Function setter
+===============
+
+function set hello() {
+    
+}
+
+---
+
+(program
+    (function_declaration
+        (accessor)
+        (identifier)
+        (statement_block)
+    )
+)
+
+=================
+default parameter
+=================
+
+function hello(w = "World", sep: String = "!") {
+
+}
+
+---
+
+
+(program
+    (function_declaration
+        (identifier)
+        (function_parameters
+            (identifier)
+            (string)
+            (identifier) (type_hint
+                (dotted_identifier
+                (identifier))
+            )
+            (string))
+        (statement_block)
     )
 )

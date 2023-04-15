@@ -56,3 +56,15 @@ const a = [{b: (c.d[2])}, 3, c.e];
         )
     )
 )
+
+===========
+empty array
+===========
+
+const a = [];
+
+---
+
+(program
+    (constant_declaration (identifier) (array))
+)

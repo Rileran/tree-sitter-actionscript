@@ -33,7 +33,12 @@ module.exports = grammar({
     $.primary_expression,
   ],
 
-  conflicts: ($) => [[$.class_attribut, $.property_attribut]],
+  conflicts: ($) => [
+    [$.class_annotation, $.primary_expression],
+    [$.class_attribut, $.property_attribut],
+    [$.primary_expression, $.for_in_statement],
+    [$.primary_expression, $.for_each_in_statement],
+  ],
 
   word: ($) => $.identifier,
 
@@ -56,28 +61,28 @@ module.exports = grammar({
       seq(
         'package',
         optional(field('name', $.dotted_identifier)),
-        '{',
-        field('body', repeat($.statement)),
-        '}'
+        field('body', $.statement_block)
       ),
 
     class_declaration: ($) =>
       seq(
+        optional($.class_annotation),
         repeat($.class_attribut),
         'class',
         field('name', $.identifier),
         optional(seq('extends', $._data_type)),
         optional(seq('implements', sep1($._data_type, ','))),
-        '{',
-        field('body', repeat($.statement)),
-        '}'
+        field('body', $.statement)
       ),
+
+    class_annotation: ($) => seq('[', $.identifier, ']'),
 
     // https://help.adobe.com/fr_FR/as3/learn/WS5b3ccc516d4fbf351e63e3d118a9b90204-7f36.html
     class_attribut: ($) => choice('dynamic', 'final', 'internal', 'public'),
 
     interface_declaration: ($) =>
       seq(
+        optional($.interface_attribut),
         'interface',
         field('name', $.identifier),
         optional(seq('extends', sep1($._data_type, ','))),
@@ -86,9 +91,13 @@ module.exports = grammar({
         '}'
       ),
 
+    //https://help.adobe.com/en_US/as3/learn/WS5b3ccc516d4fbf351e63e3d118a9b90204-7f41.html
+    interface_attribut: ($) => choice('internal', 'public'),
+
     method_declaration: ($) =>
       seq(
         'function',
+        optional($.accessor),
         field('name', $.identifier),
         '(',
         field('parameters', optional($.function_parameters)),
@@ -101,18 +110,27 @@ module.exports = grammar({
       seq(
         repeat($.property_attribut),
         'function',
+        optional($.accessor),
         field('name', $.identifier),
         '(',
         field('parameters', optional($.function_parameters)),
         ')',
         optional(field('return_type', $.type_hint)),
-        '{',
-        field('body', repeat($.statement)),
-        '}'
+        field('body', $.statement_block)
       ),
 
     function_parameters: ($) =>
-      sep1(choice(seq($.identifier, optional($.type_hint)), $.rest), ','),
+      sep1(
+        choice(
+          seq(
+            $.identifier,
+            optional(field('type', $.type_hint)),
+            optional(field('default', seq('=', $.expression)))
+          ),
+          $.rest
+        ),
+        ','
+      ),
 
     variable_declaration: ($) =>
       seq(
@@ -136,13 +154,178 @@ module.exports = grammar({
 
     // https://help.adobe.com/fr_FR/as3/learn/WS5b3ccc516d4fbf351e63e3d118a9b90204-7f36.html
     property_attribut: ($) =>
-      choice('internal', 'private', 'protected', 'public', 'static'),
+      choice(
+        'internal',
+        'private',
+        'protected',
+        'public',
+        'static',
+        'final',
+        'override'
+      ),
+
+    accessor: ($) => choice('get', 'set'),
 
     rest: ($) => seq('...', $.identifier),
 
     // Statements
 
+    statement: ($) =>
+      choice(
+        $.import_statement,
+        $.declaration,
+        $.expression_statement,
+        $.statement_block,
+        $.if_statement,
+        $.switch_statement,
+        $.for_statement,
+        $.for_in_statement,
+        $.for_each_in_statement,
+        $.while_statement,
+        $.do_statement,
+        $.try_statement,
+        $.with_statement,
+        $.break_statement,
+        $.continue_statement,
+        $.return_statement,
+        $.throw_statement,
+        $.empty_statement
+      ),
+
     import_statement: ($) => seq('import', $.dotted_identifier, ';'),
+
+    expression_statement: ($) => seq($.expression, ';'),
+
+    statement_block: ($) => seq('{', repeat($.statement), '}'),
+
+    if_statement: ($) =>
+      prec.right(
+        seq(
+          'if',
+          field('condition', $.parenthesized_expression),
+          field('consequence', $.statement),
+          optional(field('alternative', $.else_clause))
+        )
+      ),
+
+    else_clause: ($) => seq('else', $.statement),
+
+    switch_statement: ($) =>
+      seq(
+        'switch',
+        field('value', $.parenthesized_expression),
+        field('body', $.switch_body)
+      ),
+    switch_body: ($) =>
+      seq('{', repeat(choice($.switch_case, $.switch_default)), '}'),
+    switch_case: ($) =>
+      seq(
+        'case',
+        field('value', $.expression),
+        ':',
+        field('body', repeat($.statement))
+      ),
+    switch_default: ($) =>
+      seq('default', ':', field('body', repeat($.statement))),
+
+    for_statement: ($) =>
+      seq(
+        'for',
+        '(',
+        field(
+          'initializer',
+          choice(
+            $.variable_declaration,
+            $.expression_statement,
+            $.empty_statement
+          )
+        ),
+        field('condition', choice($.expression_statement, $.empty_statement)),
+        field('increment', optional($.expression)),
+        ')',
+        field('body', $.statement)
+      ),
+
+    for_in_statement: ($) =>
+      seq(
+        'for',
+        '(',
+        optional('var'),
+        field(
+          'left',
+          seq(
+            choice($.identifier, $.subscript_expression),
+            optional($.type_hint)
+          )
+        ),
+        'in',
+        field('right', $.expression),
+        ')',
+        field('body', $.statement)
+      ),
+
+    for_each_in_statement: ($) =>
+      seq(
+        'for each',
+        '(',
+        optional('var'),
+        field('left', seq($.identifier, optional($.type_hint))),
+        'in',
+        field('right', $.expression),
+        ')',
+        field('body', $.statement)
+      ),
+
+    while_statement: ($) =>
+      seq(
+        'while',
+        field('condition', $.parenthesized_expression),
+        field('body', $.statement)
+      ),
+
+    do_statement: ($) =>
+      seq(
+        'do',
+        field('body', $.statement),
+        'while',
+        field('condition', $.parenthesized_expression),
+        ';'
+      ),
+
+    with_statement: ($) =>
+      seq(
+        'with',
+        field('object', $.parenthesized_expression),
+        field('body', $.statement)
+      ),
+
+    try_statement: ($) =>
+      seq(
+        'try',
+        field('body', $.statement_block),
+        field('handler', repeat($.catch_clause)),
+        optional(field('finalizer', $.finally_clause))
+      ),
+    catch_clause: ($) =>
+      seq(
+        'catch',
+        '(',
+        field('parameter', $.identifier),
+        optional(field('type', $.type_hint)),
+        ')',
+        field('body', $.statement_block)
+      ),
+    finally_clause: ($) => seq('finally', field('body', $.statement_block)),
+
+    break_statement: ($) => seq('break', ';'),
+
+    continue_statement: ($) => seq('continue', ';'),
+
+    return_statement: ($) => seq('return', optional($.expression), ';'),
+
+    throw_statement: ($) => seq('throw', optional($.expression), ';'),
+
+    empty_statement: ($) => ';',
 
     // block
     // conditionnals
@@ -150,17 +333,7 @@ module.exports = grammar({
     // errors
     // labels
 
-    statement: ($) =>
-      choice($.import_statement, $.declaration, $.expression_statement),
-
-    expression_statement: ($) => seq($.expression, ';'),
-
     // Expressions
-
-    // assignation
-    // function call
-    // arithmetics
-    // instanciation
 
     expression: ($) =>
       choice(
@@ -180,6 +353,7 @@ module.exports = grammar({
         $.member_expression,
         $.parenthesized_expression,
         $.identifier,
+        $.regex,
         $.true,
         $.false,
         $.undefined,
@@ -188,6 +362,7 @@ module.exports = grammar({
         $.string,
         $.object,
         $.array,
+        $.vector,
         $.anonymous_function,
         $.call_expression
       ),
@@ -216,7 +391,8 @@ module.exports = grammar({
     parenthesized_expression: ($) =>
       prec(PREC.PRIMARY, seq('(', $.expression, ')')),
 
-    object: ($) => prec(PREC.PRIMARY, seq('{', sep1($.pair, ','), '}')),
+    object: ($) =>
+      prec(PREC.PRIMARY, seq('{', optional(sep1($.pair, ',')), '}')),
 
     pair: ($) =>
       seq(
@@ -225,7 +401,14 @@ module.exports = grammar({
         field('value', $.expression)
       ),
 
-    array: ($) => prec(PREC.PRIMARY, seq('[', sep1($.expression, ','), ']')),
+    array: ($) =>
+      prec(PREC.PRIMARY, seq('[', optional(sep1($.expression, ',')), ']')),
+
+    vector: ($) =>
+      prec(
+        PREC.PRIMARY,
+        seq('<', field('type', $._data_type), '>', field('value', $.array))
+      ),
 
     anonymous_function: ($) =>
       prec(
@@ -236,9 +419,7 @@ module.exports = grammar({
           field('parameters', optional($.function_parameters)),
           ')',
           optional(field('return_type', $.type_hint)),
-          '{',
-          field('body', repeat($.statement)),
-          '}'
+          field('body', $.statement_block)
         )
       ),
 
@@ -368,7 +549,8 @@ module.exports = grammar({
           )
         )
       ),
-    new_expression: ($) => prec(PREC.PRIMARY, seq('new', $.call_expression)),
+    new_expression: ($) =>
+      prec(PREC.PRIMARY, seq('new', choice($.call_expression, $.vector))),
 
     // import statements
     // defining namespace name <aaa>;
@@ -498,10 +680,45 @@ module.exports = grammar({
         )
       ),
 
+    regex: ($) =>
+      seq(
+        '/',
+        field('pattern', $.regex_pattern),
+        token.immediate('/'),
+        optional(field('flags', $.regex_flags))
+      ),
+
+    regex_pattern: ($) =>
+      token.immediate(
+        prec(
+          -1,
+          repeat1(
+            choice(
+              seq(
+                '[',
+                repeat(
+                  choice(
+                    seq('\\', /./), // escaped character
+                    /[^\]\n\\]/ // any character besides ']' or '\n'
+                  )
+                ),
+                ']'
+              ), // square-bracket-delimited character class
+              seq('\\', /./), // escaped character
+              /[^/\\\[\n]/ // any character besides '[', '\', '/', '\n'
+            )
+          )
+        )
+      ),
+
+    regex_flags: ($) => token.immediate(/[a-z]+/),
+
     // Common
 
     dotted_identifier: ($) => seq($.identifier, repeat(seq('.', $.identifier))),
-    identifier: ($) => /[\p{L}_$][\p{L}\p{Nd}_$]*/,
+
+    // symbol "#" and "§" because they can show up in decompiled code
+    identifier: ($) => /[\p{L}_$#§][\p{L}\p{Nd}_$§#]*/,
 
     // Comments
 

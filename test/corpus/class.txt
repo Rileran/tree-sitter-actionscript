@@ -9,7 +9,7 @@ class A {
 ---
 
 (program
-    (class_declaration (identifier))
+    (class_declaration (identifier) (statement_block))
 )
 
 ======================
@@ -26,6 +26,7 @@ class A extends B {
     (class_declaration
         (identifier)
         (dotted_identifier (identifier))
+        (statement_block)
     )
 )
 
@@ -43,6 +44,7 @@ class A implements C, D {
     (class_declaration
         (identifier)
         (dotted_identifier (identifier)) (dotted_identifier (identifier))
+        (statement_block)
     )
 )
 
@@ -61,6 +63,7 @@ class A extends B implements C {
         (identifier)
         (dotted_identifier (identifier))
         (dotted_identifier (identifier))
+        (statement_block)
     )
 )
 
@@ -79,15 +82,18 @@ class Hello {
 (program
     (class_declaration
         (identifier)
-        (function_declaration
-            (identifier)
-            (function_parameters
-                (identifier) (type_hint
+        (statement_block
+            (function_declaration
+                (identifier)
+                (function_parameters
+                    (identifier) (type_hint
+                        (dotted_identifier (identifier))
+                    )
+                )
+                (type_hint 
                     (dotted_identifier (identifier))
                 )
-            )
-            (type_hint 
-                (dotted_identifier (identifier))
+                (statement_block)
             )
         )
     )
@@ -108,5 +114,26 @@ public final class World {
         (class_attribut)
         (class_attribut)
         (identifier)
+        (statement_block)
+    )
+)
+
+===============
+With annotation
+===============
+
+[ExcludeClass]
+public class A {
+
+}
+
+---
+
+(program
+    (class_declaration
+        (class_annotation (identifier))
+        (class_attribut)
+        (identifier)
+        (statement_block)
     )
 )
