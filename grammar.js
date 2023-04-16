@@ -34,7 +34,7 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
-    [$.class_annotation, $.primary_expression],
+    [$.annotation, $.primary_expression],
     [$.class_attribut, $.property_attribut],
     [$.primary_expression, $.for_in_statement],
     [$.primary_expression, $.for_each_in_statement],
@@ -66,7 +66,7 @@ module.exports = grammar({
 
     class_declaration: ($) =>
       seq(
-        optional($.class_annotation),
+        optional($.annotation),
         repeat($.class_attribut),
         'class',
         field('name', $.identifier),
@@ -75,7 +75,18 @@ module.exports = grammar({
         field('body', $.statement)
       ),
 
-    class_annotation: ($) => seq('[', $.identifier, ']'),
+    annotation: ($) =>
+      seq(
+        '[',
+        sep1(
+          seq(
+            $.identifier,
+            optional(seq('(', sep1($.assignment_expression, ','), ')'))
+          ),
+          ','
+        ),
+        ']'
+      ),
 
     // https://help.adobe.com/fr_FR/as3/learn/WS5b3ccc516d4fbf351e63e3d118a9b90204-7f36.html
     class_attribut: ($) => choice('dynamic', 'final', 'internal', 'public'),
@@ -96,6 +107,7 @@ module.exports = grammar({
 
     method_declaration: ($) =>
       seq(
+        optional($.annotation),
         'function',
         optional($.accessor),
         field('name', $.identifier),
@@ -134,6 +146,7 @@ module.exports = grammar({
 
     variable_declaration: ($) =>
       seq(
+        optional($.annotation),
         repeat($.property_attribut),
         'var',
         field('name', $.identifier),
@@ -144,6 +157,7 @@ module.exports = grammar({
 
     constant_declaration: ($) =>
       seq(
+        optional($.annotation),
         repeat($.property_attribut),
         'const',
         field('name', $.identifier),

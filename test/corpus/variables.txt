@@ -69,3 +69,42 @@ static var a = "Hello!";
         (string)
     )
 )
+
+==============
+With attribute
+==============
+
+[Api]
+public var name = "Hello!";
+
+---
+
+(program
+    (variable_declaration
+        (annotation (identifier))
+        (property_attribut)
+        (identifier)
+        (string)
+    )
+)
+
+====================
+With attribute value
+====================
+
+[Api(name="UiApi")]
+public var name = "Hello!";
+
+---
+
+(program
+    (variable_declaration
+        (annotation 
+            (identifier)
+            (assignment_expression (identifier) (string))
+        )
+        (property_attribut)
+        (identifier)
+        (string)
+    )
+)

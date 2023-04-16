@@ -131,7 +131,7 @@ public class A {
 
 (program
     (class_declaration
-        (class_annotation (identifier))
+        (annotation (identifier))
         (class_attribut)
         (identifier)
         (statement_block)
