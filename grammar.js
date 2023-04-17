@@ -419,7 +419,7 @@ module.exports = grammar({
         seq(
           field('object', choice($.expression)),
           '.',
-          field('property', $.identifier)
+          field('property', choice($.identifier, '*'))
         )
       ),
 

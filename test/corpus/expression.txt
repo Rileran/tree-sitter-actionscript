@@ -29,6 +29,25 @@ var a = object.w;
     )
 )
 
+===================
+all property access
+===================
+
+for each(x in describeType(o).*) {
+
+}
+
+---
+
+(program
+    (for_each_in_statement
+        (identifier)
+        (member_expression
+            (call_expression (identifier) (identifier)))
+        (statement_block)
+    )
+)
+
 =============
 parenthesized
 =============
