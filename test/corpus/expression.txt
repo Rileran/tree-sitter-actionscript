@@ -332,3 +332,27 @@ const a = new Date("2022");
         ))
     )
 )
+
+=======================
+multi dot member access
+=======================
+
+for each (key in objDesc..variable.@name) {
+
+}
+
+---
+
+
+(program
+    (for_each_in_statement
+        (identifier)
+        (member_expression
+            (member_expression
+                (identifier)
+                (identifier)
+            )
+        (identifier))
+        (statement_block)
+    )
+)

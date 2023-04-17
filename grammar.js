@@ -393,7 +393,8 @@ module.exports = grammar({
         PREC.PRIMARY,
         seq(
           field('object', choice($.expression)),
-          '.',
+          // allow obj..value
+          seq('.', repeat('.')),
           field('property', $.identifier)
         )
       ),
