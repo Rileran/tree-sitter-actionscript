@@ -34,6 +34,7 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
+    [$.sequence_expression, $.pair],
     [$.annotation, $.primary_expression],
     [$.class_attribut, $.property_attribut],
     [$.primary_expression, $.for_in_statement],
@@ -41,6 +42,8 @@ module.exports = grammar({
   ],
 
   word: ($) => $.identifier,
+
+  inline: ($) => [$._expressions, $.statement],
 
   rules: {
     program: ($) => repeat($.statement),
@@ -160,11 +163,16 @@ module.exports = grammar({
       seq(
         repeat($.annotation),
         repeat($.property_attribut),
+        $._variable_declarator,
+        ';'
+      ),
+
+    _variable_declarator: ($) =>
+      seq(
         'var',
         field('name', $.identifier),
         optional(field('type', $.type_hint)),
-        optional(seq('=', field('value', $.expression))),
-        ';'
+        optional(seq('=', field('value', $.expression)))
       ),
 
     constant_declaration: ($) =>
@@ -222,7 +230,7 @@ module.exports = grammar({
 
     import_statement: ($) => seq('import', $._data_type, ';'),
 
-    expression_statement: ($) => seq($.expression, ';'),
+    expression_statement: ($) => seq($._expressions, ';'),
 
     statement_block: ($) => seq('{', repeat($.statement), '}'),
 
@@ -263,13 +271,13 @@ module.exports = grammar({
         field(
           'initializer',
           choice(
-            $.variable_declaration,
+            seq(sep1($._variable_declarator, ','), ';'),
             $.expression_statement,
             $.empty_statement
           )
         ),
         field('condition', choice($.expression_statement, $.empty_statement)),
-        field('increment', optional(sep1($.expression, ','))),
+        field('increment', optional($._expressions)),
         ')',
         field('body', $.statement)
       ),
@@ -365,6 +373,15 @@ module.exports = grammar({
 
     // Expressions
 
+    _expressions: ($) => choice($.expression, $.sequence_expression),
+
+    sequence_expression: ($) =>
+      seq(
+        field('left', $.expression),
+        ',',
+        field('right', choice($.expression, $.sequence_expression))
+      ),
+
     expression: ($) =>
       choice(
         $.primary_expression,
@@ -444,7 +461,7 @@ module.exports = grammar({
       ),
 
     parenthesized_expression: ($) =>
-      prec(PREC.PRIMARY, seq('(', $.expression, ')')),
+      prec(PREC.PRIMARY, seq('(', $._expressions, ')')),
 
     object: ($) =>
       prec(PREC.PRIMARY, seq('{', optional(sep1($.pair, ',')), '}')),

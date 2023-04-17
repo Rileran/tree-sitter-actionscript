@@ -36,7 +36,8 @@ for (var i = 0; i < 10; i++) {
 
 (program
     (for_statement
-        (variable_declaration (identifier) (number))
+        (identifier)
+        (number)
         (expression_statement
             (binary_expression (identifier) (number))
         )
@@ -57,11 +58,9 @@ for (var i: int = 0; i < 10; i++) {
 
 (program
     (for_statement
-        (variable_declaration 
-            (identifier)
-            (type_hint (identifier))
-            (number)
-        )
+        (identifier)
+        (type_hint (identifier))
+        (number)
         (expression_statement
             (binary_expression (identifier) (number))
         )
@@ -99,27 +98,52 @@ for(var symbol:int = 0; symbol < n; ++h.count[length[symbol]],symbol++) {
 
 ---
 
-
 (program
     (for_statement
-        (variable_declaration
-            (identifier)
-            (type_hint (identifier))
-            (number)
-        )
+        (identifier)
+        (type_hint (identifier))
+        (number)
         (expression_statement
             (binary_expression (identifier) (identifier))
         )
-        (update_expression
-            (subscript_expression
-                (member_expression (identifier) (identifier))
+        (sequence_expression
+            (update_expression
                 (subscript_expression
-                    (identifier)
-                    (identifier)
+                    (member_expression (identifier) (identifier))
+                    (subscript_expression (identifier) (identifier))
                 )
             )
+            (update_expression (identifier))
         )
-        (update_expression (identifier))
+        (statement_block)
+    )
+)
+
+=============================
+for with multiple initializer
+=============================
+
+for(var _loc13_:int = 0,var _loc14_:* = data.fightTeams; §§hasnext(_loc14_,_loc13_); alignUris.push(alignUri)) {
+
+}
+
+---
+
+(program
+    (for_statement
+        (identifier)
+        (type_hint (identifier))
+        (number)
+        (identifier)
+        (type_hint (any_type))
+        (member_expression (identifier) (identifier))
+        (expression_statement
+            (call_expression (identifier) (identifier) (identifier))
+        )
+        (call_expression
+            (member_expression (identifier) (identifier))
+            (identifier)
+        )
         (statement_block)
     )
 )

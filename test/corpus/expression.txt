@@ -427,3 +427,43 @@ var retFlow:FlowElement = new (getDefinitionByName(getQualifiedClassName(this)) 
         )
     )
 )
+
+===================
+sequence expression
+===================
+
+_loc12_ = _loc14_ != 2 ? (param2 -= _loc14_ + 1, null) : (param1.position = param2 - 2, param1.readUTFBytes(2));
+
+---
+
+(program
+    (expression_statement
+        (assignment_expression
+            (identifier)
+            (ternary_expression
+                (binary_expression (identifier) (number))
+                (parenthesized_expression
+                    (sequence_expression
+                        (augmented_assignment_expression
+                            (identifier)
+                            (binary_expression (identifier) (number))
+                        )
+                        (null)
+                    )
+                )
+                (parenthesized_expression
+                    (sequence_expression
+                        (assignment_expression
+                            (member_expression (identifier) (identifier))
+                            (binary_expression (identifier) (number))
+                        )
+                        (call_expression
+                            (member_expression (identifier) (identifier))
+                            (number)
+                        )
+                    )
+                )
+            )
+        )
+    )
+)

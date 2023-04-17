@@ -59,7 +59,8 @@ for (var i = 0; i < 20; i++) {
 
 (program
     (for_statement
-        (variable_declaration (identifier) (number))
+        (identifier)
+        (number)
         (expression_statement
             (binary_expression (identifier) (number))
         )
