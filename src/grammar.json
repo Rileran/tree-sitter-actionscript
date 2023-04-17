@@ -1878,6 +1878,10 @@
         {
           "type": "SYMBOL",
           "name": "call_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "generic_data_type"
         }
       ]
     },

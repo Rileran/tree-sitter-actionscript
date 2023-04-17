@@ -373,7 +373,8 @@ module.exports = grammar({
         $.array,
         $.vector,
         $.anonymous_function,
-        $.call_expression
+        $.call_expression,
+        $.generic_data_type
       ),
 
     subscript_expression: ($) =>

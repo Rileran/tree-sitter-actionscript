@@ -92,6 +92,10 @@
         "named": true
       },
       {
+        "type": "generic_data_type",
+        "named": true
+      },
+      {
         "type": "identifier",
         "named": true
       },
