@@ -26,7 +26,7 @@ package a.b {
 
 (program
     (package_declaration 
-        (dotted_identifier (identifier) (identifier))
+        (scoped_data_type (identifier) (identifier))
         (statement_block)
     )
 )
@@ -47,7 +47,7 @@ package a {
 
 (program
     (package_declaration
-        (dotted_identifier (identifier))
+        (identifier)
         (statement_block
             (class_declaration 
                 (identifier)

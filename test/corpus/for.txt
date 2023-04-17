@@ -59,7 +59,7 @@ for (var i: int = 0; i < 10; i++) {
     (for_statement
         (variable_declaration 
             (identifier)
-            (type_hint (dotted_identifier (identifier)))
+            (type_hint (identifier))
             (number)
         )
         (expression_statement

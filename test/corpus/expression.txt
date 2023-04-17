@@ -60,12 +60,10 @@ const a = function(param: int, ...rest): void {
         (anonymous_function
             (function_parameters
                 (identifier)
-                (type_hint
-                    (dotted_identifier
-                    (identifier)))
+                (type_hint (identifier))
                 (rest
                     (identifier)))
-            (type_hint (dotted_identifier (identifier)))
+            (type_hint (identifier))
             (statement_block
                 (variable_declaration (identifier) (string))
             )

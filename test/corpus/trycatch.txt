@@ -15,7 +15,7 @@ try {
         (statement_block)
     (catch_clause
         (identifier)
-        (type_hint (dotted_identifier (identifier)))
+        (type_hint (identifier))
         (statement_block))
     )
 )
@@ -39,7 +39,7 @@ try {
         (statement_block)
     (catch_clause
         (identifier)
-        (type_hint (dotted_identifier (identifier)))
+        (type_hint (identifier))
         (statement_block))
     (finally_clause
         (statement_block))
@@ -65,12 +65,12 @@ try {
         (statement_block)
     (catch_clause
         (identifier)
-        (type_hint (dotted_identifier (identifier)))
+        (type_hint (identifier))
         (statement_block)
     )
     (catch_clause
         (identifier)
-        (type_hint (dotted_identifier (identifier)))
+        (type_hint (identifier))
         (statement_block))
     )
 )

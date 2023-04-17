@@ -39,13 +39,10 @@ function Hello (args1: Vector.<int>, args2: String) {}
         (identifier)
         (function_parameters
             (identifier) (type_hint
-                (generic_data_type
-                    (dotted_identifier (identifier))
-                    (dotted_identifier (identifier))
+                (generic_data_type (identifier) (identifier)
                 )
             )
-            (identifier) (type_hint
-                (dotted_identifier (identifier))
+            (identifier) (type_hint (identifier)
             )
         )
         (statement_block)
@@ -63,8 +60,7 @@ function hello(): void {}
 (program
     (function_declaration
         (identifier)
-        (type_hint
-            (dotted_identifier (identifier))
+        (type_hint (identifier)
         )
         (statement_block)
     )
@@ -179,8 +175,7 @@ function hello(w = "World", sep: String = "!") {
             (identifier)
             (string)
             (identifier) (type_hint
-                (dotted_identifier
-                (identifier))
+                (identifier)
             )
             (string))
         (statement_block)

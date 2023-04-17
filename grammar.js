@@ -60,7 +60,7 @@ module.exports = grammar({
     package_declaration: ($) =>
       seq(
         'package',
-        optional(field('name', $.dotted_identifier)),
+        optional(field('name', $._data_type)),
         field('body', $.statement_block)
       ),
 
@@ -69,7 +69,7 @@ module.exports = grammar({
         optional($.annotation),
         repeat($.class_attribut),
         'class',
-        field('name', $.identifier),
+        field('name', $._data_type),
         optional(seq('extends', $._data_type)),
         optional(seq('implements', sep1($._data_type, ','))),
         field('body', $.statement)
@@ -206,7 +206,7 @@ module.exports = grammar({
         $.empty_statement
       ),
 
-    import_statement: ($) => seq('import', $.dotted_identifier, ';'),
+    import_statement: ($) => seq('import', $._data_type, ';'),
 
     expression_statement: ($) => seq($.expression, ';'),
 
@@ -341,12 +341,6 @@ module.exports = grammar({
 
     empty_statement: ($) => ';',
 
-    // block
-    // conditionnals
-    // loops
-    // errors
-    // labels
-
     // Expressions
 
     expression: ($) =>
@@ -358,6 +352,7 @@ module.exports = grammar({
         $.binary_expression,
         $.ternary_expression,
         $.update_expression,
+        $.cast_expression,
         $.new_expression
       ),
 
@@ -516,7 +511,7 @@ module.exports = grammar({
           ['>', PREC.RELATIONAL],
           ['<=', PREC.RELATIONAL],
           ['>=', PREC.RELATIONAL],
-          ['as', PREC.RELATIONAL],
+          // ['as', PREC.RELATIONAL],
           ['in', PREC.RELATIONAL],
           ['instanceof', PREC.RELATIONAL],
           ['is', PREC.RELATIONAL],
@@ -533,6 +528,9 @@ module.exports = grammar({
           prec.left(pre, seq($.expression, op, $.expression))
         )
       ),
+
+    cast_expression: ($) =>
+      prec.left(PREC.RELATIONAL, seq($.expression, 'as', $._data_type)),
 
     ternary_expression: ($) =>
       prec.right(
@@ -566,47 +564,29 @@ module.exports = grammar({
     new_expression: ($) =>
       prec(PREC.PRIMARY, seq('new', choice($.call_expression, $.vector))),
 
-    // import statements
-    // defining namespace name <aaa>;
-    // using namespace use <aaa>;
-
-    // Loops (continue)
-
-    // for
-    // for..in
-    // for each..in
-    // while
-    // do..while
-
-    // Conditionals
-
-    // if..else
-    // if..else if
-    // switch (break, default)
-
-    // Vectors & Arrays
-
-    // Vector.<>
-
-    // Errors
-
-    // try..catch..finally (may be multiple catch)
-    // throw
-
     // Data types
 
     _data_type: ($) =>
-      choice($.any_type, $.dotted_identifier, $.generic_data_type),
+      prec.right(
+        choice(
+          $.any_type,
+          $.identifier,
+          $.generic_data_type,
+          $.scoped_data_type
+        )
+      ),
 
     any_type: ($) => '*',
 
     generic_data_type: ($) =>
       seq(
-        $.dotted_identifier,
+        $.identifier,
         '.<',
         field('type_parameters', sep1($._data_type, ',')),
         '>'
       ),
+
+    scoped_data_type: ($) => seq($.identifier, '.', $._data_type),
 
     type_hint: ($) => seq(':', field('type', $._data_type)),
 
@@ -726,10 +706,6 @@ module.exports = grammar({
       ),
 
     regex_flags: ($) => token.immediate(/[a-z]+/),
-
-    // Common
-
-    dotted_identifier: ($) => seq($.identifier, repeat(seq('.', $.identifier))),
 
     // symbol "#" and "§" because they can show up in decompiled code
     identifier: ($) => /[\p{L}_$#§][\p{L}\p{Nd}_$§#]*/,

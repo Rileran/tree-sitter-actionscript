@@ -46,12 +46,12 @@ var f: Vector.<Int> = null;
 ---
 
 (program
-    (variable_declaration (identifier) (type_hint (dotted_identifier (identifier))) (number))
-    (variable_declaration (identifier) (type_hint (dotted_identifier (identifier))) (number))
-    (constant_declaration (identifier) (type_hint (dotted_identifier (identifier))) (string))
-    (constant_declaration (identifier) (type_hint (dotted_identifier (identifier) (identifier))))
+    (variable_declaration (identifier) (type_hint (identifier)) (number))
+    (variable_declaration (identifier) (type_hint (identifier)) (number))
+    (constant_declaration (identifier) (type_hint (identifier)) (string))
+    (constant_declaration (identifier) (type_hint (scoped_data_type (identifier) (identifier))))
     (variable_declaration (identifier) (type_hint (any_type)) (null))
-    (variable_declaration (identifier) (type_hint (generic_data_type (dotted_identifier (identifier)) (dotted_identifier (identifier)))) (null))
+    (variable_declaration (identifier) (type_hint (generic_data_type (identifier) (identifier))) (null))
 )
 
 =======================

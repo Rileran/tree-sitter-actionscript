@@ -29,7 +29,7 @@ for each (var s: String in lines) {
 (program
     (for_each_in_statement
         (identifier)
-        (type_hint (dotted_identifier (identifier)))
+        (type_hint (identifier))
         (identifier)
         (statement_block)
     )

@@ -176,7 +176,7 @@ as
 
 (program
     (expression_statement
-        (binary_expression (number) (identifier))
+        (cast_expression (number) (identifier))
     )
 )
 

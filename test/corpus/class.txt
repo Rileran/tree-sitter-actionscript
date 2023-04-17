@@ -25,7 +25,7 @@ class A extends B {
 (program
     (class_declaration
         (identifier)
-        (dotted_identifier (identifier))
+        (identifier)
         (statement_block)
     )
 )
@@ -43,7 +43,8 @@ class A implements C, D {
 (program
     (class_declaration
         (identifier)
-        (dotted_identifier (identifier)) (dotted_identifier (identifier))
+        (identifier)
+        (identifier)
         (statement_block)
     )
 )
@@ -61,8 +62,8 @@ class A extends B implements C {
 (program
     (class_declaration
         (identifier)
-        (dotted_identifier (identifier))
-        (dotted_identifier (identifier))
+        (identifier)
+        (identifier)
         (statement_block)
     )
 )
@@ -86,13 +87,9 @@ class Hello {
             (function_declaration
                 (identifier)
                 (function_parameters
-                    (identifier) (type_hint
-                        (dotted_identifier (identifier))
-                    )
+                    (identifier) (type_hint (identifier))
                 )
-                (type_hint 
-                    (dotted_identifier (identifier))
-                )
+                (type_hint  (identifier))
                 (statement_block)
             )
         )

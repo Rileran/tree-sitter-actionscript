@@ -8,7 +8,10 @@ import a.b.c;
 
 (program
     (import_statement
-        (dotted_identifier (identifier) (identifier) (identifier))
+        (scoped_data_type
+            (identifier)
+            (scoped_data_type (identifier) (identifier))
+        )
     )
 )
 
@@ -111,6 +114,56 @@ function f(x) {
         (statement_block
             (throw_statement
                 (new_expression (call_expression (identifier)))
+            )
+        )
+    )
+)
+
+=========
+as vector
+=========
+
+this._contributions = params as Vector.<Contribution>;
+
+---
+
+(program
+    (expression_statement
+        (assignment_expression
+            (member_expression (identifier) (identifier))
+            (cast_expression
+                (identifier)
+                (generic_data_type
+                    (identifier)
+                    (identifier)
+                )
+            )
+        )
+    )
+)
+
+==========
+complex as
+==========
+
+const v: a.b.c = null as a.b.c;
+
+---
+
+(program
+    (constant_declaration
+        (identifier)
+        (type_hint
+            (scoped_data_type
+                (identifier)
+                (scoped_data_type (identifier) (identifier))
+            )
+        )
+        (cast_expression
+            (null)
+            (scoped_data_type
+                (identifier)
+                (scoped_data_type (identifier) (identifier))
             )
         )
     )
