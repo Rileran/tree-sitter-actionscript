@@ -134,3 +134,25 @@ public class A {
         (statement_block)
     )
 )
+
+=========================
+With mutliple annotations
+=========================
+
+[ExcludeClass]
+[ExcludeClass]
+public class A {
+
+}
+
+---
+
+(program
+    (class_declaration
+        (annotation (identifier))
+        (annotation (identifier))
+        (class_attribut)
+        (identifier)
+        (statement_block)
+    )
+)

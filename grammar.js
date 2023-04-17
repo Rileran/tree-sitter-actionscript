@@ -60,7 +60,7 @@ module.exports = grammar({
 
     namespace_declaration: ($) =>
       seq(
-        optional($.annotation),
+        repeat($.annotation),
         repeat($.property_attribut),
         'namespace',
         field('name', $.identifier),
@@ -76,7 +76,7 @@ module.exports = grammar({
 
     class_declaration: ($) =>
       seq(
-        optional($.annotation),
+        repeat($.annotation),
         repeat($.class_attribut),
         'class',
         field('name', $._data_type),
@@ -117,7 +117,7 @@ module.exports = grammar({
 
     method_declaration: ($) =>
       seq(
-        optional($.annotation),
+        repeat($.annotation),
         'function',
         optional($.accessor),
         field('name', $.identifier),
@@ -156,7 +156,7 @@ module.exports = grammar({
 
     variable_declaration: ($) =>
       seq(
-        optional($.annotation),
+        repeat($.annotation),
         repeat($.property_attribut),
         'var',
         field('name', $.identifier),
@@ -167,7 +167,7 @@ module.exports = grammar({
 
     constant_declaration: ($) =>
       seq(
-        optional($.annotation),
+        repeat($.annotation),
         repeat($.property_attribut),
         'const',
         field('name', $.identifier),

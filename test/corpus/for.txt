@@ -88,3 +88,38 @@ for (;;) {
         (statement_block)
     )
 )
+
+===========================
+for with multiple increment
+===========================
+
+for(var symbol:int = 0; symbol < n; ++h.count[length[symbol]],symbol++) {
+
+}
+
+---
+
+
+(program
+    (for_statement
+        (variable_declaration
+            (identifier)
+            (type_hint (identifier))
+            (number)
+        )
+        (expression_statement
+            (binary_expression (identifier) (identifier))
+        )
+        (update_expression
+            (subscript_expression
+                (member_expression (identifier) (identifier))
+                (subscript_expression
+                    (identifier)
+                    (identifier)
+                )
+            )
+        )
+        (update_expression (identifier))
+        (statement_block)
+    )
+)
