@@ -595,6 +595,13 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
+            "name": "annotation"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
             "name": "property_attribut"
           }
         },

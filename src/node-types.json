@@ -1011,6 +1011,10 @@
           "named": true
         },
         {
+          "type": "annotation",
+          "named": true
+        },
+        {
           "type": "property_attribut",
           "named": true
         }

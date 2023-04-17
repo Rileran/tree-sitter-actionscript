@@ -131,6 +131,7 @@ module.exports = grammar({
 
     function_declaration: ($) =>
       seq(
+        repeat($.annotation),
         repeat($.property_attribut),
         'function',
         optional($.accessor),
