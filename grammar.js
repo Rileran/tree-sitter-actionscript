@@ -214,7 +214,8 @@ module.exports = grammar({
         $.continue_statement,
         $.return_statement,
         $.throw_statement,
-        $.empty_statement
+        $.empty_statement,
+        $.labeled_statement
       ),
 
     import_statement: ($) => seq('import', $._data_type, ';'),
@@ -342,15 +343,23 @@ module.exports = grammar({
       ),
     finally_clause: ($) => seq('finally', field('body', $.statement_block)),
 
-    break_statement: ($) => seq('break', ';'),
+    break_statement: ($) =>
+      seq('break', optional(field('label', $.identifier)), ';'),
 
-    continue_statement: ($) => seq('continue', ';'),
+    continue_statement: ($) =>
+      seq('continue', optional(field('label', $.identifier)), ';'),
 
     return_statement: ($) => seq('return', optional($.expression), ';'),
 
     throw_statement: ($) => seq('throw', optional($.expression), ';'),
 
     empty_statement: ($) => ';',
+
+    labeled_statement: ($) =>
+      prec.dynamic(
+        -1,
+        seq(field('label', $.identifier), ':', field('body', $.statement))
+      ),
 
     // Expressions
 
