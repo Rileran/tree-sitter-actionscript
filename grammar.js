@@ -820,7 +820,7 @@ module.exports = grammar({
     // symbol "#", "$" "§" because they can show up in decompiled code
     // TODO: "@" symbol is the attribute identifier operator, used to access attribute
     // in XML data
-    identifier: ($) => /[\p{L}_#§@][\p{L}\p{Nd}_$#§@]*/,
+    identifier: ($) => /[\p{L}_$#§@][\p{L}\p{Nd}_$#§@]*/,
 
     // Comments
 
