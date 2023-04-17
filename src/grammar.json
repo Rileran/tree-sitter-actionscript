@@ -2412,11 +2412,20 @@
               "value": ">"
             },
             {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "xml"
-              }
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "xml"
+                  }
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[\\w ]+"
+                }
+              ]
             },
             {
               "type": "STRING",

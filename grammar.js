@@ -473,7 +473,8 @@ module.exports = grammar({
           $.identifier,
           repeat($.xml_attribute),
           '>',
-          repeat($.xml),
+          // TODO: make a proper regex for the xml content
+          choice(repeat($.xml), /[\w ]+/),
           '</',
           $.identifier,
           '>'

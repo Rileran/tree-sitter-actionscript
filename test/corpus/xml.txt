@@ -68,3 +68,19 @@ const xml = <tag a="1" b="2"></tag>;
         )
     )
 )
+
+==========
+with value
+==========
+
+const xml = <tag>hello world</tag>;
+
+---
+
+
+(program
+    (constant_declaration
+    (identifier)
+    (xml
+        (identifier)
+        (identifier))))
