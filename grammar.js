@@ -267,7 +267,7 @@ module.exports = grammar({
           )
         ),
         field('condition', choice($.expression_statement, $.empty_statement)),
-        field('increment', optional($.expression)),
+        field('increment', optional(sep1($.expression, ','))),
         ')',
         field('body', $.statement)
       ),
