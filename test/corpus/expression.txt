@@ -323,7 +323,6 @@ const a = new Date("2022");
 
 ---
 
-
 (program
     (constant_declaration
         (identifier)
@@ -333,26 +332,20 @@ const a = new Date("2022");
     )
 )
 
-=======================
-multi dot member access
-=======================
+================
+descent accessor
+================
 
-for each (key in objDesc..variable.@name) {
-
-}
+const a = b..c;
 
 ---
 
-
 (program
-    (for_each_in_statement
+    (constant_declaration
         (identifier)
-        (member_expression
-            (member_expression
-                (identifier)
-                (identifier)
-            )
-        (identifier))
-        (statement_block)
+        (descendant_expression
+            (identifier)
+            (identifier)
+        )
     )
 )

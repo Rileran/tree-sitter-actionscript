@@ -54,9 +54,19 @@ module.exports = grammar({
         $.function_declaration,
         $.class_declaration,
         $.interface_declaration,
-        $.package_declaration
+        $.package_declaration,
+        $.namespace_declaration
       ),
 
+    namespace_declaration: ($) =>
+      seq(
+        optional($.annotation),
+        repeat($.property_attribut),
+        'namespace',
+        field('name', $.identifier),
+        optional(seq('=', field('value', $.expression))),
+        ';'
+      ),
     package_declaration: ($) =>
       seq(
         'package',
@@ -175,7 +185,8 @@ module.exports = grammar({
         'public',
         'static',
         'final',
-        'override'
+        'override',
+        $.identifier // namespace
       ),
 
     accessor: ($) => choice('get', 'set'),
@@ -360,6 +371,8 @@ module.exports = grammar({
       choice(
         $.subscript_expression,
         $.member_expression,
+        $.descendant_expression,
+        $.namespace_expression,
         $.parenthesized_expression,
         $.identifier,
         $.regex,
@@ -393,8 +406,27 @@ module.exports = grammar({
         PREC.PRIMARY,
         seq(
           field('object', choice($.expression)),
-          // allow obj..value
-          seq('.', repeat('.')),
+          '.',
+          field('property', $.identifier)
+        )
+      ),
+
+    descendant_expression: ($) =>
+      prec(
+        PREC.PRIMARY,
+        seq(
+          field('object', choice($.expression)),
+          '..',
+          field('property', $.identifier)
+        )
+      ),
+
+    namespace_expression: ($) =>
+      prec(
+        PREC.PRIMARY,
+        seq(
+          field('object', choice($.expression)),
+          '::',
           field('property', $.identifier)
         )
       ),
@@ -709,8 +741,10 @@ module.exports = grammar({
 
     regex_flags: ($) => token.immediate(/[a-z]+/),
 
-    // symbol "#" and "§" because they can show up in decompiled code
-    identifier: ($) => /[\p{L}_$#§@][\p{L}\p{Nd}_$#§@]*/,
+    // symbol "#", "$" "§" because they can show up in decompiled code
+    // TODO: "@" symbol is the attribute identifier operator, used to access attribute
+    // in XML data
+    identifier: ($) => /[\p{L}_#§@][\p{L}\p{Nd}_$#§@]*/,
 
     // Comments
 
