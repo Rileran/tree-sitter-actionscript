@@ -257,7 +257,7 @@
       "required": true,
       "types": [
         {
-          "type": "assignment_expression",
+          "type": "expression",
           "named": true
         },
         {

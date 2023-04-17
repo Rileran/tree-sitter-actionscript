@@ -194,11 +194,43 @@ public function get float() : *
 
 ---
 
-
 (program
     (function_declaration
         (annotation
             (identifier)
+            (assignment_expression (identifier) (string))
+        )
+        (property_attribut)
+        (accessor)
+        (identifier)
+        (type_hint (any_type))
+        (statement_block
+            (return_statement
+                (member_expression (identifier) (identifier))
+            )
+        )
+    )
+)
+
+=======================
+With another annotation
+=======================
+
+[Bindable("listChanged")]
+[Inspectable(arrayType="Object",category="General")]
+public function get float(): *
+{
+   return this._float;
+}
+
+---
+
+(program
+    (function_declaration
+        (annotation (identifier) (string))
+        (annotation
+            (identifier)
+            (assignment_expression (identifier) (string))
             (assignment_expression (identifier) (string))
         )
         (property_attribut)

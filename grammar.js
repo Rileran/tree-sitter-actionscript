@@ -92,10 +92,7 @@ module.exports = grammar({
       seq(
         '[',
         sep1(
-          seq(
-            $.identifier,
-            optional(seq('(', sep1($.assignment_expression, ','), ')'))
-          ),
+          seq($.identifier, optional(seq('(', sep1($.expression, ','), ')'))),
           ','
         ),
         ']'

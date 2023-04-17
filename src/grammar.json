@@ -269,7 +269,7 @@
                           "members": [
                             {
                               "type": "SYMBOL",
-                              "name": "assignment_expression"
+                              "name": "expression"
                             },
                             {
                               "type": "REPEAT",
@@ -282,7 +282,7 @@
                                   },
                                   {
                                     "type": "SYMBOL",
-                                    "name": "assignment_expression"
+                                    "name": "expression"
                                   }
                                 ]
                               }
@@ -333,7 +333,7 @@
                                 "members": [
                                   {
                                     "type": "SYMBOL",
-                                    "name": "assignment_expression"
+                                    "name": "expression"
                                   },
                                   {
                                     "type": "REPEAT",
@@ -346,7 +346,7 @@
                                         },
                                         {
                                           "type": "SYMBOL",
-                                          "name": "assignment_expression"
+                                          "name": "expression"
                                         }
                                       ]
                                     }
