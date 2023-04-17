@@ -68,3 +68,22 @@ public interface A {
         (identifier)
     )
 )
+
+===============
+with annotation
+===============
+
+[ExcludeClass]
+public interface A {
+
+}
+
+---
+
+(program
+    (interface_declaration
+        (annotation (identifier))
+        (interface_attribut)
+        (identifier)
+    )
+)

@@ -103,6 +103,7 @@ module.exports = grammar({
 
     interface_declaration: ($) =>
       seq(
+        repeat($.annotation),
         optional($.interface_attribut),
         'interface',
         field('name', $.identifier),

@@ -1197,6 +1197,10 @@
       "required": false,
       "types": [
         {
+          "type": "annotation",
+          "named": true
+        },
+        {
           "type": "any_type",
           "named": true
         },
