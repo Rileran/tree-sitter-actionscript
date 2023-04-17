@@ -709,7 +709,7 @@ module.exports = grammar({
     regex_flags: ($) => token.immediate(/[a-z]+/),
 
     // symbol "#" and "§" because they can show up in decompiled code
-    identifier: ($) => /[\p{L}_$#§][\p{L}\p{Nd}_$§#]*/,
+    identifier: ($) => /[\p{L}_$#§@][\p{L}\p{Nd}_$#§@]*/,
 
     // Comments
 

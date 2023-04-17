@@ -3647,7 +3647,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[\\p{L}_$#§][\\p{L}\\p{Nd}_$§#]*"
+      "value": "[\\p{L}_$#§@][\\p{L}\\p{Nd}_$#§@]*"
     },
     "comment": {
       "type": "CHOICE",
