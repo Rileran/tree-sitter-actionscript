@@ -1402,44 +1402,13 @@
   {
     "type": "new_expression",
     "named": true,
-    "fields": {
-      "parameters": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "any_type",
-          "named": true
-        },
-        {
-          "type": "generic_data_type",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "scoped_data_type",
-          "named": true
-        },
-        {
-          "type": "vector",
+          "type": "primary_expression",
           "named": true
         }
       ]
@@ -2052,19 +2021,7 @@
         "required": true,
         "types": [
           {
-            "type": "any_type",
-            "named": true
-          },
-          {
-            "type": "generic_data_type",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "scoped_data_type",
             "named": true
           }
         ]

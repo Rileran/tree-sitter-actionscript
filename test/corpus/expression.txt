@@ -326,8 +326,8 @@ const a = new Date("2022");
 (program
     (constant_declaration
         (identifier)
-        (new_expression
-            (identifier) (string)
+        (call_expression
+            (new_expression (identifier)) (string)
         )
     )
 )
@@ -346,6 +346,34 @@ const a = b..c;
         (descendant_expression
             (identifier)
             (identifier)
+        )
+    )
+)
+
+======================
+complex new expression
+======================
+
+var retFlow:FlowElement = new (getDefinitionByName(getQualifiedClassName(this)) as Class)();
+
+---
+
+(program
+    (variable_declaration
+        (identifier)
+        (type_hint (identifier))
+        (call_expression
+            (new_expression
+                (parenthesized_expression
+                    (cast_expression
+                        (call_expression
+                            (identifier)
+                            (call_expression (identifier) (identifier))
+                        )
+                        (identifier)
+                    )
+                )
+            )
         )
     )
 )

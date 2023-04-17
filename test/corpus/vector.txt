@@ -35,10 +35,12 @@ const ns: Vector.<Number> = new Vector.<Number>();
         (type_hint
             (generic_data_type (identifier) (identifier))
         )
-        (new_expression
-            (generic_data_type
-                (identifier)
-                (identifier)
+        (call_expression
+            (new_expression
+                (generic_data_type
+                    (identifier)
+                    (identifier)
+                )
             )
         )
     )

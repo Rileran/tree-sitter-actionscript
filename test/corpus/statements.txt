@@ -113,7 +113,9 @@ function f(x) {
         (function_parameters (identifier))
         (statement_block
             (throw_statement
-                (new_expression (identifier))
+                (call_expression
+                    (new_expression (identifier))
+                )
             )
         )
     )

@@ -462,7 +462,8 @@ module.exports = grammar({
     vector: ($) =>
       prec(
         PREC.PRIMARY,
-        seq('<', field('type', $._data_type), '>', field('value', $.array))
+        // TODO: replace '$.identifier' with the more correct '$._data_type'
+        seq('<', field('type', $.identifier), '>', field('value', $.array))
       ),
 
     xml: ($) =>
@@ -624,22 +625,7 @@ module.exports = grammar({
           )
         )
       ),
-    new_expression: ($) =>
-      prec(
-        PREC.PRIMARY,
-        seq(
-          'new',
-          choice(
-            seq(
-              $._data_type,
-              '(',
-              field('parameters', optional(sep1($.expression, ','))),
-              ')'
-            ),
-            $.vector
-          )
-        )
-      ),
+    new_expression: ($) => prec(PREC.PRIMARY, seq('new', $.primary_expression)),
 
     // Data types
 
