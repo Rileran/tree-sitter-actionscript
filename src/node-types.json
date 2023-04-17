@@ -154,6 +154,10 @@
       {
         "type": "vector",
         "named": true
+      },
+      {
+        "type": "xml",
+        "named": true
       }
     ]
   },
@@ -1394,13 +1398,40 @@
   {
     "type": "new_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "call_expression",
+          "type": "any_type",
+          "named": true
+        },
+        {
+          "type": "generic_data_type",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "scoped_data_type",
           "named": true
         },
         {
@@ -2099,6 +2130,48 @@
     }
   },
   {
+    "type": "xml",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "xml",
+          "named": true
+        },
+        {
+          "type": "xml_attribute",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "xml_attribute",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -2207,6 +2280,10 @@
     "named": false
   },
   {
+    "type": "/>",
+    "named": false
+  },
+  {
     "type": "0X",
     "named": false
   },
@@ -2228,6 +2305,10 @@
   },
   {
     "type": "<",
+    "named": false
+  },
+  {
+    "type": "</",
     "named": false
   },
   {

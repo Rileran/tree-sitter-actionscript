@@ -36,11 +36,9 @@ const ns: Vector.<Number> = new Vector.<Number>();
             (generic_data_type (identifier) (identifier))
         )
         (new_expression
-            (call_expression
-                (generic_data_type
-                    (identifier)
-                    (identifier)
-                )
+            (generic_data_type
+                (identifier)
+                (identifier)
             )
         )
     )

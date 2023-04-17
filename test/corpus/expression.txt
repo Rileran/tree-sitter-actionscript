@@ -326,9 +326,9 @@ const a = new Date("2022");
 (program
     (constant_declaration
         (identifier)
-        (new_expression (call_expression
+        (new_expression
             (identifier) (string)
-        ))
+        )
     )
 )
 

@@ -395,6 +395,7 @@ module.exports = grammar({
         $.object,
         $.array,
         $.vector,
+        $.xml,
         $.anonymous_function,
         $.call_expression,
         $.generic_data_type
@@ -462,6 +463,23 @@ module.exports = grammar({
         PREC.PRIMARY,
         seq('<', field('type', $._data_type), '>', field('value', $.array))
       ),
+
+    xml: ($) =>
+      choice(
+        seq(
+          '<',
+          $.identifier,
+          repeat($.xml_attribute),
+          '>',
+          repeat($.xml),
+          '</',
+          $.identifier,
+          '>'
+        ),
+        seq('<', $.identifier, repeat($.xml_attribute), '/>')
+      ),
+
+    xml_attribute: ($) => seq($.identifier, '=', $.string),
 
     anonymous_function: ($) =>
       prec(
@@ -606,7 +624,21 @@ module.exports = grammar({
         )
       ),
     new_expression: ($) =>
-      prec(PREC.PRIMARY, seq('new', choice($.call_expression, $.vector))),
+      prec(
+        PREC.PRIMARY,
+        seq(
+          'new',
+          choice(
+            seq(
+              $._data_type,
+              '(',
+              field('parameters', optional(sep1($.expression, ','))),
+              ')'
+            ),
+            $.vector
+          )
+        )
+      ),
 
     // Data types
 
