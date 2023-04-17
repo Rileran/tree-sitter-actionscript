@@ -660,40 +660,85 @@ module.exports = grammar({
     undefined: ($) => 'undefined',
     null: ($) => 'null',
 
-    // Numeric literals
-    // https://docstore.mik.ua/orelly/web2/action/ch04_03.htm
+    // from https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js
+    number: ($) => {
+      const hex_literal = seq(choice('0x', '0X'), /[\da-fA-F](_*[\da-fA-F])*/);
 
-    number: ($) =>
-      choice(
-        $._nan,
-        $._pInfinity,
-        $._mInfinity,
-        $._hex_literal,
-        $._decimal_literal
-      ),
+      const decimal_digits = /\d(_*\d)*/;
+      const signed_integer = seq(optional(choice('-', '+')), decimal_digits);
+      const exponent_part = seq(choice('e', 'E'), signed_integer);
 
-    _hex_literal: ($) => seq(choice('0x', '0X'), /[0-9a-fA-F][0-9a-fA-F_]*/),
-    // _hex_literal: ($) => seq(choice('0x', '0X'), sep1(/[0-9a-fA-F]+/, /_+/)),
-    // TODO: Octal should be 0777 like numbers
-    // _oct_literal: ($) => '',
+      const binary_literal = seq(choice('0b', '0B'), /[0-1](_*[0-1])*/);
 
-    _integer_literal: ($) => /[0-9][0-9_]*/,
-    _exponential_part: ($) =>
-      seq(choice('e', 'E'), optional(choice('+', '-')), $._integer_literal),
-    _decimal_literal: ($) =>
-      prec.right(
+      const octal_literal = seq(choice('0o', '0O'), /[0-7](_*[0-7])*/);
+
+      const bigint_literal = seq(
+        choice(hex_literal, binary_literal, octal_literal, decimal_digits),
+        'n'
+      );
+
+      const decimal_integer_literal = choice(
+        '0',
+        seq(optional('0'), /[1-9]/, optional(seq(repeat('_'), decimal_digits)))
+      );
+
+      const decimal_literal = choice(
         seq(
-          $._integer_literal,
-          optional(seq('.', $._integer_literal)),
-          optional($._exponential_part)
-        )
-      ),
+          decimal_integer_literal,
+          '.',
+          optional(decimal_digits),
+          optional(exponent_part)
+        ),
+        seq('.', decimal_digits, optional(exponent_part)),
+        seq(decimal_integer_literal, exponent_part),
+        seq(decimal_digits)
+      );
 
-    // Numeric constants
-    // https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/package-detail.html
-    _nan: ($) => 'NaN',
-    _pInfinity: ($) => 'Infinity',
-    _mInfinity: ($) => '-Infinity',
+      // Numeric constants
+      // https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/package-detail.html
+      const nan = 'NaN';
+      const pInfinity = 'Infinity';
+      const mInfinity = '-Infinity';
+
+      return token(
+        choice(
+          hex_literal,
+          decimal_literal,
+          binary_literal,
+          octal_literal,
+          bigint_literal,
+          nan,
+          pInfinity,
+          mInfinity
+        )
+      );
+    },
+
+    // number: ($) =>
+    //   choice(
+    //     $._nan,
+    //     $._pInfinity,
+    //     $._mInfinity,
+    //     $._hex_literal,
+    //     $._decimal_literal
+    //   ),
+
+    // _hex_literal: ($) => seq(choice('0x', '0X'), /[0-9a-fA-F][0-9a-fA-F_]*/),
+    // // _hex_literal: ($) => seq(choice('0x', '0X'), sep1(/[0-9a-fA-F]+/, /_+/)),
+    // // TODO: Octal should be 0777 like numbers
+    // // _oct_literal: ($) => '',
+
+    // _integer_literal: ($) => /[0-9][0-9_]*/,
+    // _exponential_part: ($) =>
+    //   seq(choice('e', 'E'), optional(choice('+', '-')), $._integer_literal),
+    // _decimal_literal: ($) =>
+    //   prec.right(
+    //     seq(
+    //       $._integer_literal,
+    //       optional(seq('.', $._integer_literal)),
+    //       optional($._exponential_part)
+    //     )
+    //   ),
 
     // String literals
 
