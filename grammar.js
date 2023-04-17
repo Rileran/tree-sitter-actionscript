@@ -433,7 +433,10 @@ module.exports = grammar({
         seq(
           field('object', choice($.expression)),
           '.',
-          field('property', choice($.identifier, '*'))
+          field(
+            'property',
+            choice($.identifier, '*', $.parenthesized_expression)
+          )
         )
       ),
 

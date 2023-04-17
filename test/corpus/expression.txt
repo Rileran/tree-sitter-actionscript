@@ -467,3 +467,79 @@ _loc12_ = _loc14_ != 2 ? (param2 -= _loc14_ + 1, null) : (param1.position = para
         )
     )
 )
+
+===========================
+named xml member expression
+===========================
+
+if(list.(@name == "Transient").length() <= 0) {
+
+}
+
+---
+
+(program
+    (if_statement
+        (parenthesized_expression
+            (binary_expression
+                (call_expression
+                    (member_expression
+                        (member_expression
+                            (identifier)
+                            (parenthesized_expression
+                                (binary_expression (identifier) (string))
+                            )
+                        )
+                        (identifier)
+                    )
+                )
+                (number)
+            )
+        )
+        (statement_block)
+    )
+)
+
+=============================
+sequence expression in update
+=============================
+
+for(t.subTo(y,y); y.t < ys; )
+{
+   y.(++y.t, !!0);
+}
+
+---
+
+(program
+    (for_statement
+        (expression_statement
+            (call_expression
+                (member_expression (identifier) (identifier))
+                (identifier)
+                (identifier)
+            )
+        )
+        (expression_statement
+            (binary_expression
+                (member_expression (identifier) (identifier))
+                (identifier)
+            )
+        )
+        (statement_block
+            (expression_statement
+                (member_expression
+                    (identifier)
+                    (parenthesized_expression
+                        (sequence_expression
+                            (update_expression
+                                (member_expression (identifier) (identifier))
+                            )
+                            (unary_expression (unary_expression (number)))
+                        )
+                    )
+                )
+            )
+        )
+    )
+)
