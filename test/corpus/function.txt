@@ -244,3 +244,33 @@ public function get float(): *
         )
     )
 )
+
+===================
+function called get
+===================
+
+public function get() {}
+
+---
+
+(program
+    (function_declaration
+        (property_attribut)
+        (statement_block)
+    )
+)
+
+===================
+function called set
+===================
+
+public function set() {}
+
+---
+
+(program
+    (function_declaration
+        (property_attribut)
+        (statement_block)
+    )
+)

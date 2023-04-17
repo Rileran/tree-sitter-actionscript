@@ -121,7 +121,7 @@ module.exports = grammar({
         repeat($.annotation),
         'function',
         optional($.accessor),
-        field('name', $.identifier),
+        field('name', choice('get', 'set', $.identifier)),
         '(',
         field('parameters', optional($.function_parameters)),
         ')',
@@ -135,7 +135,8 @@ module.exports = grammar({
         repeat($.property_attribut),
         'function',
         optional($.accessor),
-        field('name', $.identifier),
+        // awful way to allow function named 'get' or 'set'
+        field('name', choice('get', 'set', $.identifier)),
         '(',
         field('parameters', optional($.function_parameters)),
         ')',

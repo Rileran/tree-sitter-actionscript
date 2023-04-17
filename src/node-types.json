@@ -1044,8 +1044,16 @@
         "required": true,
         "types": [
           {
+            "type": "get",
+            "named": false
+          },
+          {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "set",
+            "named": false
           }
         ]
       },
@@ -1368,8 +1376,16 @@
         "required": true,
         "types": [
           {
+            "type": "get",
+            "named": false
+          },
+          {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "set",
+            "named": false
           }
         ]
       },
