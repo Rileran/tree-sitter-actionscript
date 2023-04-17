@@ -90,6 +90,37 @@ const a = function(param: int, ...rest): void {
     )
 )
 
+===========================
+another anonymous with name
+===========================
+
+const f = function filterContactsByNameFunction(person:SocialCharacterWrapper, index:int, vector:Vector.<SocialCharacterWrapper>):Boolean {
+
+};
+
+---
+
+(program
+    (constant_declaration
+        (identifier)
+        (anonymous_function
+            (identifier)
+            (function_parameters
+                (identifier)
+                (type_hint (identifier))
+                (identifier)
+                (type_hint (identifier))
+                (identifier)
+                (type_hint
+                    (generic_data_type (identifier) (identifier))
+                )
+            )
+            (type_hint (identifier))
+            (statement_block)
+        )
+    )
+)
+
 =============
 function call
 =============

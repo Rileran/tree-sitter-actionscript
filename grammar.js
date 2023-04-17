@@ -488,6 +488,7 @@ module.exports = grammar({
         PREC.PRIMARY,
         seq(
           'function',
+          optional(field('name', $.identifier)),
           '(',
           field('parameters', optional($.function_parameters)),
           ')',
