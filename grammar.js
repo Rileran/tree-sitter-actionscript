@@ -83,8 +83,10 @@ module.exports = grammar({
         repeat($.class_attribut),
         'class',
         field('name', $._data_type),
-        optional(seq('extends', $._data_type)),
-        optional(seq('implements', sep1($._data_type, ','))),
+        optional(field('superclass', seq('extends', $._data_type))),
+        optional(
+          field('interfaces', seq('implements', sep1($._data_type, ',')))
+        ),
         field('body', $.statement)
       ),
 
@@ -107,7 +109,7 @@ module.exports = grammar({
         optional($.interface_attribut),
         'interface',
         field('name', $.identifier),
-        optional(seq('extends', sep1($._data_type, ','))),
+        optional(field('supertype', seq('extends', sep1($._data_type, ',')))),
         '{',
         field('body', repeat($.method_declaration)),
         '}'

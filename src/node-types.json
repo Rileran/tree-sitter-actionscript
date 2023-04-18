@@ -598,6 +598,36 @@
           }
         ]
       },
+      "interfaces": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "any_type",
+            "named": true
+          },
+          {
+            "type": "generic_data_type",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implements",
+            "named": false
+          },
+          {
+            "type": "scoped_data_type",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -605,6 +635,32 @@
           {
             "type": "any_type",
             "named": true
+          },
+          {
+            "type": "generic_data_type",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "scoped_data_type",
+            "named": true
+          }
+        ]
+      },
+      "superclass": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "any_type",
+            "named": true
+          },
+          {
+            "type": "extends",
+            "named": false
           },
           {
             "type": "generic_data_type",
@@ -630,23 +686,7 @@
           "named": true
         },
         {
-          "type": "any_type",
-          "named": true
-        },
-        {
           "type": "class_attribut",
-          "named": true
-        },
-        {
-          "type": "generic_data_type",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "scoped_data_type",
           "named": true
         }
       ]
@@ -1274,6 +1314,36 @@
             "named": true
           }
         ]
+      },
+      "supertype": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "any_type",
+            "named": true
+          },
+          {
+            "type": "extends",
+            "named": false
+          },
+          {
+            "type": "generic_data_type",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "scoped_data_type",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -1285,23 +1355,7 @@
           "named": true
         },
         {
-          "type": "any_type",
-          "named": true
-        },
-        {
-          "type": "generic_data_type",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "interface_attribut",
-          "named": true
-        },
-        {
-          "type": "scoped_data_type",
           "named": true
         }
       ]
